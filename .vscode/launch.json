@@ -1,0 +1,45 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run MonicaSanchez_1_H04",
+      "runtimeExecutable": "cds",
+      "killBehavior": "polite",
+      "request": "launch",
+      "args": [
+        "watch",
+        "--open"
+      ],
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "type": "pwa-node",
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "PreLaunchTask for Run MonicaSanchez_1_H04",
+      "envFile": "${workspaceFolder}/env/.env1",
+      "env": {
+        "run.config": "{\"handlerId\":\"lcap_run_config_handler_id\",\"runnableId\":\"{\\\"projectPath\\\":\\\"/home/user/projects/MonicaSanchez_1_H04\\\",\\\"profileName\\\":\\\"\\\"}\"}",
+        "runConfigurations": "{\"dbBinding\":{\"type\":\"SAP HANA Cloud\",\"dbName\":\"db1_h04\"},\"odataBinding\":{\"S4HCP_ServiceOrder_Odata\":{\"destination\":\"S4HCP-ServiceOrder-Odata\",\"type\":\"Destination\",\"path\":\"\"}}}"
+      }
+    },
+    {
+      "name": "S4HCP-ServiceOrder-Odata",
+      "runtimeExecutable": "cds",
+      "request": "launch",
+      "killBehavior": "polite",
+      "args": [
+        "watch",
+        "--open"
+      ],
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "type": "pwa-node",
+      "cwd": "${workspaceFolder}/",
+      "preLaunchTask": "PreLaunchTask for S4HCP-ServiceOrder-Odata",
+      "envFile": "${workspaceFolder}/env/.env2",
+      "env": {
+        "run.config": "{\"handlerId\":\"lcap_run_config_handler_id\",\"runnableId\":\"{\\\"projectPath\\\":\\\"/home/user/projects/MonicaSanchez_1_H04/\\\",\\\"profileName\\\":\\\"\\\"}\"}",
+        "runConfigurations": "{\"dbBinding\":{\"type\":\"SAP HANA Cloud\",\"dbName\":\"db1_h01\"}}"
+      }
+    }
+  ]
+}

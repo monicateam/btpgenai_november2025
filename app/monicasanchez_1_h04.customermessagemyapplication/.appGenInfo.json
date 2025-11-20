@@ -1,0 +1,26 @@
+{
+  "generationParameters": {
+    "generationDate": "Tue Nov 18 2025 14:49:42 GMT+0000 (Coordinated Universal Time)",
+    "generatorPlatform": "SAP Business Application Studio",
+    "serviceType": "Local CAP",
+    "metadataFilename": "",
+    "serviceUrl": "http://localhost:4004/service/monicaSanchez_1_H04/",
+    "appName": "monicasanchez_1_h04.customermessagemyapplication",
+    "appTitle": "Customer message My Application",
+    "appDescription": "Manage Customer message",
+    "appNamespace": "",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.120.13",
+    "showMockDataInfo": false,
+    "generatorVersion": "1.19.5",
+    "template": "List Report Page V4",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [
+      {
+        "type": "Main Entity",
+        "value": "CustomerMessage"
+      }
+    ],
+    "launchText": "To launch the generated app, start your CAP project:  and navigate to the following location in your browser:\n\nhttp://localhost:4004/monicasanchez_1_h04.customermessagemyapplication/webapp/index.html"
+  }
+}

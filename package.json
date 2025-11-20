@@ -1,0 +1,66 @@
+{
+  "name": "MonicaSanchez_1_H04",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "dependencies": {
+    "@cap-js/hana": "^2",
+    "@sap-cloud-sdk/http-client": "^4.1.2",
+    "@sap-ai-sdk/foundation-models": "^2.2.0",
+    "@sap-ai-sdk/orchestration": "^2.2.0",
+    "@sap-cloud-sdk/util": "^4.1.2",
+    "@sap/cds": "^9",
+    "@sap/low-code-event-handler": "^1.2.5",
+    "@sap/xsenv": ">=3.3.2 <3.3.3",
+    "@sap/xssec": "^4.11.2",
+    "express": "^4",
+    "hdb": "^2.26.2",
+    "passport": "^0.7.0",
+    "@sap-cloud-sdk/connectivity": "^4",
+    "@sap-cloud-sdk/resilience": "^4"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^2",
+    "@sap/dev-cap-tools": "^1.31.0"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "start-local": "npm run generate-entry-point && npm run cds-watch",
+    "generate-entry-point": "dev-cap-tools gen-entrypoint",
+    "cds-watch": "cds watch --open",
+    "watch-monicasanchez_1_h04.customermessagemyapplication": "cds watch --open monicasanchez_1_h04.customermessagemyapplication/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-monicasanchez_1_h04.productfaqapp": "cds watch --open monicasanchez_1_h04.productfaqapp/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "private": true,
+  "cds": {
+    "requires": {
+      "[production]": {
+        "db": "hana",
+        "auth": "xsuaa"
+      },
+      "auth": {
+        "[development]": {
+          "kind": "dummy"
+        },
+        "[production]": {
+          "kind": "xsuaa"
+        }
+      },
+      "S4HCP_ServiceOrder_Odata": {
+        "kind": "odata-v2",
+        "model": "srv/external/S4HCP_ServiceOrder_Odata",
+        "[production]": {
+          "credentials": {
+            "destination": "S4HCP-ServiceOrder-Odata"
+          }
+        },
+        "csrf": true,
+        "csrfInBatch": true
+      }
+    }
+  },
+  "lcap": true,
+  "sapux": [
+    "app/monicasanchez_1_h04.customermessagemyapplication",
+    "app/monicasanchez_1_h04.productfaqapp"
+  ]
+}
