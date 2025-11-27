@@ -8,7 +8,7 @@ sap.ui.define([
     return {
 
         MaintainSOExtended: async function (oEvent, oBindingContext) {
-            var maintainSODialog = {
+            /*var maintainSODialog = {
                 serviceOrderProduct: "SRV_01",
                 ServiceOrderDuration: 1,
                 ServiceOrderDurationUnit: "HR",
@@ -185,42 +185,59 @@ sap.ui.define([
             });
             oView.addDependent(oDialog);
             oDialog.addStyleClass("sapUiResponsiveContentPadding");
-            oDialog.open();
+            oDialog.open();*/
+
+            var that = this;
+            var oView = this._controller.getView();
+            var oContextBinding = oView.getModel().bindContext(oBindingContext[0].sPath);
+            oContextBinding.requestObject().then((oData) => {
+                console.log(oData);
+
+                if (oData.S4HCP_ServiceOrder_ServiceOrder === null || oData.S4HCP_ServiceOrder_ServiceOrder === undefined) {
+                    Utils.showDialogMaintainSO(oEvent, oBindingContext, this);
+                } else {
+                    Utils.crearDialogSimple(that._controller, "Error","SOAlreadyExists", "Accept");
+                }
+            }).catch((err) => {
+                //Handle error
+            });
+
+            
         },
         generateReplyExtended: async function (oEvent, oBindingContext) {
-                var that = this;
-                var oView = this._controller.getView();
-                var oContextBinding = oView.getModel().bindContext(oBindingContext[0].sPath);
-                oContextBinding.requestObject().then((oData) => {
-                    console.log(oData);
+            var that = this;
+            var oView = this._controller.getView();
+            var oContextBinding = oView.getModel().bindContext(oBindingContext[0].sPath);
+            oContextBinding.requestObject().then((oData) => {
+                console.log(oData);
 
-                    if(oData.suggestedResponseEnglish.length === 0) {
-                        if (oData.S4HCP_ServiceOrder_ServiceOrder !== null && oData.S4HCP_ServiceOrder_ServiceOrder !== undefined) {
-                            Utils.callGenerateReply(oEvent, oBindingContext, that, false);
-                        } else {
-                            Utils.showDialogGenerateReplyWithoutSO(oEvent, oBindingContext, that);
-                        }
+                if(oData.suggestedResponseEnglish === null || oData.suggestedResponseEnglish !== null && oData.suggestedResponseEnglish.length === 0) {
+                    if (oData.S4HCP_ServiceOrder_ServiceOrder !== null && oData.S4HCP_ServiceOrder_ServiceOrder !== undefined) {
+                        Utils.callGenerateReply(oEvent, oBindingContext, that, false);
                     } else {
-                        Utils.showYesOrNoMessage(that._controller, "alreadyGeneratedReply", "ReplyAlreadyExists", {
-                            yes: function() {
-                                if (oData.S4HCP_ServiceOrder_ServiceOrder !== null && oData.S4HCP_ServiceOrder_ServiceOrder !== undefined) {
-                                    Utils.callGenerateReply(oEvent, oBindingContext, that, false);
-                                } else {
-                                    Utils.showDialogGenerateReplyWithoutSO(oEvent, oBindingContext, that);
-                                }
-                            },
-                            no: function() {
-
-                            }
-                        });
+                        Utils.showDialogGenerateReplyWithoutSO(oEvent, oBindingContext, that);
                     }
+                } else {
+                    Utils.showYesOrNoMessage(that._controller, "alreadyGeneratedReply", "ReplyAlreadyExists", {
+                        yes: function() {
+                            if (oData.S4HCP_ServiceOrder_ServiceOrder !== null && oData.S4HCP_ServiceOrder_ServiceOrder !== undefined) {
+                                Utils.callGenerateReply(oEvent, oBindingContext, that, false);
+                            } else {
+                                Utils.showDialogGenerateReplyWithoutSO(oEvent, oBindingContext, that);
+                            }
+                        },
+                        no: function() {
 
-                    
-                    //Handle success
-                }).catch((err) => {
-                    //Handle error
-                });
-            },
+                        }
+                    });
+                }
+
+                
+                //Handle success
+            }).catch((err) => {
+                //Handle error
+            });
+        },
 
     };
 });
