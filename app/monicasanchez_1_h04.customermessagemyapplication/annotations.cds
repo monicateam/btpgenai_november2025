@@ -88,17 +88,7 @@ annotate service.CustomerMessage with @(
         {
             $Type : 'UI.DataField',
             Value : customerMessageID,
-        },
-        {
-            $Type : 'UI.DataFieldForAction',
-            Action : 'monicaSanchez_1_H04Srv.Action1',
-            Label : 'Generate Reply',
-        },
-        {
-            $Type : 'UI.DataFieldForAction',
-            Action : 'monicaSanchez_1_H04Srv.Action2',
-            Label : 'Maintain SO',
-        },
+        }
     ],
 );
 

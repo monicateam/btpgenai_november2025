@@ -1,7 +1,7 @@
 {
   "_version": "1.60.0",
   "sap.app": {
-    "id": "monicasanchez1h04.customermessagemyapplication",
+    "id": "monicasanchez1h04.customerpanel",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -13,7 +13,7 @@
     "sourceTemplate": {
       "id": "@sap/generator-fiori:lrop",
       "version": "1.19.5",
-      "toolsId": "8a5e1c37-461b-45fe-82c7-8161ab342ae8"
+      "toolsId": "a0d8c18d-0eb5-4e78-bbf1-aa9bff21badd"
     },
     "dataSources": {
       "mainService": {
@@ -27,10 +27,10 @@
     },
     "crossNavigation": {
       "inbounds": {
-        "monicasanchez1h04customermessa-display": {
-          "semanticObject": "monicasanchez1h04customermessa",
+        "monicasanchez1h04customerpanel-display": {
+          "semanticObject": "monicasanchez1h04customerpanel",
           "action": "display",
-          "title": "{{monicasanchez1h04customermessa-display.flpTitle}}",
+          "title": "{{monicasanchez1h04customerpanel-display.flpTitle}}",
           "signature": {
             "parameters": {},
             "additionalParameters": "allowed"
@@ -73,7 +73,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "monicasanchez1h04.customermessagemyapplication.i18n.i18n"
+          "bundleName": "monicasanchez1h04.customerpanel.i18n.i18n"
         }
       },
       "": {
@@ -98,28 +98,28 @@
       "routes": [
         {
           "pattern": ":?query:",
-          "name": "CustomerMessageList",
-          "target": "CustomerMessageList"
+          "name": "customerTicketsList",
+          "target": "customerTicketsList"
         },
         {
-          "pattern": "CustomerMessage({key}):?query:",
-          "name": "CustomerMessageObjectPage",
-          "target": "CustomerMessageObjectPage"
+          "pattern": "customerTickets({key}):?query:",
+          "name": "customerTicketsObjectPage",
+          "target": "customerTicketsObjectPage"
         }
       ],
       "targets": {
-        "CustomerMessageList": {
+        "customerTicketsList": {
           "type": "Component",
-          "id": "CustomerMessageList",
+          "id": "customerTicketsList",
           "name": "sap.fe.templates.ListReport",
           "options": {
             "settings": {
-              "contextPath": "/CustomerMessage",
+              "contextPath": "/customerTickets",
               "variantManagement": "Page",
               "navigation": {
-                "CustomerMessage": {
+                "customerTickets": {
                   "detail": {
-                    "route": "CustomerMessageObjectPage"
+                    "route": "customerTicketsObjectPage"
                   }
                 }
               },
@@ -129,36 +129,19 @@
                     "type": "ResponsiveTable"
                   }
                 }
-              }
+              },
+              "initialLoad": "Enabled"
             }
           }
         },
-        "CustomerMessageObjectPage": {
+        "customerTicketsObjectPage": {
           "type": "Component",
-          "id": "CustomerMessageObjectPage",
+          "id": "customerTicketsObjectPage",
           "name": "sap.fe.templates.ObjectPage",
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/CustomerMessage",
-              
-              "content": {
-                "header": {
-                  "actions": {
-                    "MaintainSOExtended": {
-                      "press": "monicasanchez1h04.customermessagemyapplication.ext.controller.CustomActions.MaintainSOExtended",
-                      "enabled": "true",
-                      "text": "{i18n>maintainSO}"
-                    },
-                    "generateReplyExtended": {
-                      "press": "monicasanchez1h04.customermessagemyapplication.ext.controller.CustomActions.generateReplyExtended",
-                      "enabled": "true",
-                      "text": "{i18n>generateReply}"
-                    }
-                  }
-                }
-              }
-              
+              "contextPath": "/customerTickets"
             }
           }
         }
@@ -166,16 +149,12 @@
     },
     "extends": {
       "extensions": {
-        "sap.ui.commands": {
-          "MaintainSO#manage": {
-            "MaintainSO": {
-              "shortcut": "Ctrl+K"
-            }
-          }
-        },
         "sap.ui.controllerExtensions": {
-          "sap.fe.templates.ObjectPage.ObjectPageController": {
-            "controllerName": "monicasanchez1h04.customermessagemyapplication.ext.controller.CustomerMessage-extensionObjectPage"
+          "sap.fe.templates.ListReport.ListReportController": {
+            "controllerName": "monicasanchez1h04.customerpanel.ext.controller.ListReportExtension"
+          },
+          "sap.fe.templates.ObjectPage.ObjectPageController#monicasanchez1h04.customerpanel::customerTicketsObjectPage": {
+            "controllerName": "monicasanchez1h04.customerpanel.ext.controller.CustomerTicketsObjectExtension"
           }
         }
       }

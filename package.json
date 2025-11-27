@@ -28,7 +28,8 @@
     "generate-entry-point": "dev-cap-tools gen-entrypoint",
     "cds-watch": "cds watch --open",
     "watch-monicasanchez_1_h04.customermessagemyapplication": "cds watch --open monicasanchez_1_h04.customermessagemyapplication/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-monicasanchez_1_h04.productfaqapp": "cds watch --open monicasanchez_1_h04.productfaqapp/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-monicasanchez_1_h04.productfaqapp": "cds watch --open monicasanchez_1_h04.productfaqapp/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-monicasanchez_1_h04.customerpanel": "cds watch --open monicasanchez_1_h04.customerpanel/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "private": true,
   "cds": {
@@ -61,6 +62,7 @@
   "lcap": true,
   "sapux": [
     "app/monicasanchez_1_h04.customermessagemyapplication",
-    "app/monicasanchez_1_h04.productfaqapp"
+    "app/monicasanchez_1_h04.productfaqapp",
+    "app/monicasanchez_1_h04.customerpanel"
   ]
 }

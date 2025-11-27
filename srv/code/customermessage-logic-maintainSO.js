@@ -14,6 +14,7 @@ module.exports = async function (request, next) {
 if (!ID) {
     return request.reject(400, 'ID parameter is missing.');
 }
+    const requestServiceData = request.data.ServiceOrderDetail;
 
 let customerMessage;
 try {
@@ -63,18 +64,18 @@ if (attachedSOId) {
 } else {
     // Define service order items and initial note to be added to the service order
     const itemDur = {
-        ServiceOrderItemDescription: 'Service Order duration',
-        Product: 'SRV_01',
-        ServiceDuration: 1,
-        ServiceDurationUnit: 'HR'
+        ServiceOrderItemDescription:  requestServiceData.ServiceOrderDurationDescription,
+        Product: requestServiceData.ServiceOrderDurationProduct,
+        ServiceDuration: requestServiceData.ServiceOrderDuration,
+        ServiceDurationUnit:  requestServiceData.ServiceOrderDurationUnit
     };
     const itemQty = {
-        ServiceOrderItemDescription: 'Service Order quantity',
-        Product: 'SRV_02',
-        Quantity: 1,
-        QuantityUnit: 'EA'
+        ServiceOrderItemDescription:  requestServiceData.SerrviceOrderQuantityDescription,
+        Product:  requestServiceData.ServiceOrderQuantityProduct,
+        Quantity:  requestServiceData.ServiceOrderQuantity,
+        QuantityUnit:  requestServiceData.ServiceOrderQuantityUnit
     };
-    const persResp = { PersonResponsible: '9980003640' };
+    const persResp = { PersonResponsible:  requestServiceData.PersonResponsible };
     const initNote = {
         Language: 'EN',
         LongTextID: 'S001',
@@ -83,14 +84,14 @@ if (attachedSOId) {
 
     // Create the service order object with relevant details
     const servOrder = {
-        ServiceOrderType: 'SVO1',
+        ServiceOrderType: requestServiceData.ServiceOrderType,
         ServiceOrderDescription: titleEnglish,
-        Language: 'EN',
-        ServiceDocumentPriority: '5',
-        SalesOrganization: '1710',
-        DistributionChannel: '10',
-        Division: '00',
-        SoldToParty: '17100002',
+        Language: requestServiceData.ServiceOrderLanguage,
+        ServiceDocumentPriority: requestServiceData.ServiceOrderDocumentPriority,
+        SalesOrganization: requestServiceData.ServiceOrderSalesOrganization,
+        DistributionChannel: requestServiceData.serviceOrderDistributionChannel,
+        Division: requestServiceData.ServiceOrderDivision,
+        SoldToParty: requestServiceData.ServiceOrderSoldToParty,
         to_PersonResponsible: [persResp],
         to_Item: [itemDur, itemQty],
         to_Text: [initNote]
