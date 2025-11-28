@@ -141,7 +141,21 @@
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/customerTickets"
+              "contextPath": "/customerTickets",
+              "content": {
+                "body": {
+                  "sections": {
+                    "TicketAttachments": {
+                      "template": "monicasanchez1h04.customerpanel.ext.fragment.TicketAttachments",
+                      "position": {
+                        "placement": "After",
+                        "anchor": "GeneratedFacet1"
+                      },
+                      "title": "Attachments"
+                    }
+                  }
+                }
+              }
             }
           }
         }

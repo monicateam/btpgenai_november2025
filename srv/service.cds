@@ -78,6 +78,15 @@ service monicaSanchez_1_H04Srv
     @odata.draft.enabled
     entity customerTickets as
         projection on my.CustomerMessage;
+
+    entity CustomerMessagesAttachments as projection on my.CustomerMessagesAttachments;
+    action uploadAttachmentCustomerMessage
+       (
+            customerMessageID: String,
+            fileName: String,
+            content : LargeBinary,
+            mimeType : String
+       );
 }
 
 annotate monicaSanchez_1_H04Srv with @requires :

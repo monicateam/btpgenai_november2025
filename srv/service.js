@@ -7,7 +7,7 @@ const customermessage_Logic_PreprocessMessages = require('./code/customermessage
 const productfaq_Logic_EmbedFAQ = require('./code/productfaq-logic-embedFAQ');
 const customermessage_Logic_GenerateReply = require('./code/customermessage-logic-generateReply');
 const customermessage_Logic_MaintainSO = require('./code/customermessage-logic-maintainSO');
-
+const customertickets_uploadFiles = require('./code/customertickets-uploadFiles');
 class monicaSanchez_1_H04Srv extends LCAPApplicationService {
     async init() {
 
@@ -30,6 +30,11 @@ class monicaSanchez_1_H04Srv extends LCAPApplicationService {
         this.after(['CREATE', 'UPDATE'], 'customerTickets', async (request) => {
             await customermessage_Logic_PreprocessMessages(request);
         });
+
+        this.on('uploadAttachmentCustomerMessage', async (request) => {
+            await customertickets_uploadFiles(request);
+            
+        })
 
         this.before('CREATE', 'customerTickets', async request => {
             const customerTicketID = request.data.ID;
