@@ -39,10 +39,33 @@ sap.ui.define([
 					}
 
 					
+
+					
 					var oContextBinding = oView.getModel().bindContext(oBindingContext.sPath);
 					oContextBinding.requestObject().then((oData) => {
 						Utils.getModel(oController, "vista", "view").setProperty("/ticketData",oData);
 						console.log(Utils.getModel(oController, "vista", "view").getProperty("/ticketData"));
+
+
+						var aFilters = [
+							new sap.ui.model.Filter("customerMessageKey", sap.ui.model.FilterOperator.EQ, oData.ID),
+							new sap.ui.model.Filter("deleted", sap.ui.model.FilterOperator.NE, true)
+						];
+						var oListBinding = oView.getModel().bindList(
+							"/CustomerMessagesAttachments",                              //sPath
+							null,                                       //oContext
+							null,                                       //vSorters - Dynamic Sorters 
+							aFilters
+						);
+						oListBinding.requestContexts().then((oListContext) => {
+							oData = oListContext.map(rowContext => rowContext.getObject());	
+							//Handle success
+							console.log(oData);
+							Utils.getModel(oController, "vista", "view").setProperty("/attachments",oData);
+						})
+						.catch((err) => {
+							//Handle error
+						});
 					}).catch((err) => {
 						//Handle error
 					});

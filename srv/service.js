@@ -8,6 +8,8 @@ const productfaq_Logic_EmbedFAQ = require('./code/productfaq-logic-embedFAQ');
 const customermessage_Logic_GenerateReply = require('./code/customermessage-logic-generateReply');
 const customermessage_Logic_MaintainSO = require('./code/customermessage-logic-maintainSO');
 const customertickets_uploadFiles = require('./code/customertickets-uploadFiles');
+const customertickets_deleteUploadedFiles = require('./code/customertickets-deleteFiles');
+const customertickets_downloadUploadedFiles = require('./code/customertickets-downloadFiles');
 class monicaSanchez_1_H04Srv extends LCAPApplicationService {
     async init() {
 
@@ -33,8 +35,24 @@ class monicaSanchez_1_H04Srv extends LCAPApplicationService {
 
         this.on('uploadAttachmentCustomerMessage', async (request) => {
             await customertickets_uploadFiles(request);
-            
-        })
+        });
+
+        this.on('deleteAttachmentCustomerMessage', async (request) => {
+            await customertickets_deleteUploadedFiles(request);
+        });
+        this.on('READ','CustomerMessagesAttachments', async (request,next) => {
+            if (!request.data.ID) {
+			return next()
+		}
+            const url = request._.req.path
+            if (url.includes('content')) {
+                return customertickets_downloadUploadedFiles(request);
+            }
+            else return next()
+        });
+        
+
+
 
         this.before('CREATE', 'customerTickets', async request => {
             const customerTicketID = request.data.ID;

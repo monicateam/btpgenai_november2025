@@ -26,6 +26,13 @@ service monicaSanchez_1_H04Srv
         ServiceOrderSoldToParty : String(10);
     }
 
+    entity downloadEntityFile
+    {
+        key filename: String;
+        base64data: String;
+        mimeType: String;
+    }
+
     @odata.draft.enabled
     entity CustomerMessage as
         projection on my.CustomerMessage
@@ -87,6 +94,10 @@ service monicaSanchez_1_H04Srv
             content : LargeBinary,
             mimeType : String
        );
+    action deleteAttachmentCustomerMessage(
+        ID: UUID,
+        customerMessageID: String
+    )
 }
 
 annotate monicaSanchez_1_H04Srv with @requires :

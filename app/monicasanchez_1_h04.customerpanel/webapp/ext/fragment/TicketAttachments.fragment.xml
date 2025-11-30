@@ -12,6 +12,7 @@
                         icon="sap-icon://add" 
 						busyIndicatorDelay="100"
 						httpRequestMethod="Put"
+						maximumFileSize="1"
 						uploadUrl="{vista>/urlUploadAttachments}"
                         buttonOnly="true"
                         buttonText="Upload Media"
@@ -21,6 +22,7 @@
                         uploadComplete="handler.onUploadCompleteTickets"
 						sendXHR="true"
                     />
+					<Button text="{i18n>cargarExcel}" press="handler.onPressUpload" width="100%" class="btnHeight" type="Emphasized"/>
 				</OverflowToolbar>
 			</headerToolbar>
 			<columns>
@@ -30,20 +32,28 @@
 				<Column width="9em">
 					<Text text="{i18n>mediaType}"/>
 				</Column>
-				<Column vAlign="Middle" hAlign="Center" width="4em">
+				<Column vAlign="Middle" hAlign="Center" width="12em">
 					<Text text=""/>
 				</Column>
 			</columns>
 			<items>
-				<ColumnListItem highlight="{= ${vista>buttonType} === 'Accept' ? 'Success' : ${vista>buttonType} === 'Reject' ? 'Error' : 'None' }">
+				<ColumnListItem>
 					<cells>
 						
-						<Text text="{vista>attachmentName}"/>
-						<Text text="{vista>mediaType}"/>
-						<VBox>
-							<core:Icon src="sap-icon://navigation-right-arrow" press="navToDetail"/>
-							<core:Icon src="sap-icon://navigation-right-arrow" press="navToDetail"/>
-						</VBox>
+						<Text text="{vista>fileName}"/>
+						<Text text="{vista>mimeType}"/>
+						<HBox>
+							<core:Icon src="sap-icon://download-from-cloud" press="handler.onPressDownload">
+								<core:customData>
+									<core:CustomData key="uploadID" value="{vista>ID}"/>
+								</core:customData>
+							</core:Icon>
+							<core:Icon src="sap-icon://delete" press="handler.onPressDeleteFile" class="sapUiTinyMarginBegin">
+								<core:customData>
+									<core:CustomData key="uploadID" value="{vista>ID}"/>
+								</core:customData>
+							</core:Icon>
+						</HBox>
 					</cells>
 				</ColumnListItem>
 			</items>
