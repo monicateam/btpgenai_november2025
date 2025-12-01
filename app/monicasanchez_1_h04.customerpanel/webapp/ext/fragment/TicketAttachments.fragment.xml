@@ -1,6 +1,5 @@
 <core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:macros="sap.fe.macros" xmlns:u="sap.ui.unified" >
 	<VBox core:require="{ handler: 'monicasanchez1h04/customerpanel/ext/fragment/TicketAttachments'}">
-		<Button text="TicketAttachments" press="handler.onPress" />
 		<Table items="{vista>/attachments}" alternateRowColors="true" id="tableAttachments" mode="MultiSelect" busy="{vista>/busyTableAttachments}"
 			sticky="HeaderToolbar,ColumnHeaders">
 			<headerToolbar>
@@ -15,14 +14,12 @@
 						maximumFileSize="1"
 						uploadUrl="{vista>/urlUploadAttachments}"
                         buttonOnly="true"
-                        buttonText="Upload Media"
+                        buttonText="{i18n>uploadFile}"
                         uploadOnChange="false"
                         useMultipart="false"
                         change="handler.onUploadChangeTickets"
-                        uploadComplete="handler.onUploadCompleteTickets"
 						sendXHR="true"
                     />
-					<Button text="{i18n>cargarExcel}" press="handler.onPressUpload" width="100%" class="btnHeight" type="Emphasized"/>
 				</OverflowToolbar>
 			</headerToolbar>
 			<columns>

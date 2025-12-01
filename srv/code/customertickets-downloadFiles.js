@@ -33,53 +33,7 @@ module.exports = async function(request) {
     }
         
     return request.reply(attachmentFile.content, {
-    mimetype: attachmentFile.mimeType, // > optional
-    filename: attachmentFile.fileName, // > optional
-  })
-        
-  //  var attachmentFileDecoded = Buffer.from(attachmentFile.content, 'binary').toString();
-    //var decodedMedia= "";
-   // for (var i in attachmentFile) {
-      //  decodedMedia = new Buffer.from(
-      //      (attachmentFile[i].content.toString()).split(';base64,').pop(),
-      //      'base64'
-      //  )
- //   }
-/*var decodedMedia = new Buffer.from(
-            decodedOther.split(';base64,').pop(),
-            'base64'
-        );*/
-        /*var popBase64 = attachmentFileDecoded.toString().split(';base64,').pop();
-        var decodedMedia = new Buffer.from(
-            popBase64,
-            'base64'
-        );*/
-/*
-        const readable = new Readable()
-        const result = new Array()
-        readable.push(decodedMedia)
-        readable.push(null)
-        
-        return {
-            value: readable,
-            $mediaContentType: attachmentFile.mimeType,
-        };*/
-/*
-        let buff = new Buffer.from(decodedMedia,'base64');
-        const readable = new Readable()
-        const result = new Array()
-        readable.push(buff,'base64');
-        readable.push(null)
-        result.push({ value: readable })
-        return result;*/
-        /*const stream = new Readable()
-        const result = new Array()
-        stream.push(decodedMedia)
-        stream.push(null)
-        result.push({ 
-            value: stream,
-            $mediaContentType: attachmentFile.mimeType,    $mediaContentDispositionFilename: attachmentFile.fileName
-        })
-        console.log('returning stream...')
-        return result*/
+        mimetype: attachmentFile.mimeType, // > optional
+        filename: attachmentFile.fileName, // > optional
+    });
 }

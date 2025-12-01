@@ -23,7 +23,6 @@ sap.ui.define([
 					var that = this;
 					var oController = this.base;
 					var oView = oController.getView();
-					console.log(oView.getModel().sServiceUrl);
 					var modelViewEtension = {
 						attachments: [],
 						busyUploadFile: false,
@@ -39,33 +38,10 @@ sap.ui.define([
 					}
 
 					
-
-					
 					var oContextBinding = oView.getModel().bindContext(oBindingContext.sPath);
 					oContextBinding.requestObject().then((oData) => {
 						Utils.getModel(oController, "vista", "view").setProperty("/ticketData",oData);
-						console.log(Utils.getModel(oController, "vista", "view").getProperty("/ticketData"));
-
-
-						var aFilters = [
-							new sap.ui.model.Filter("customerMessageKey", sap.ui.model.FilterOperator.EQ, oData.ID),
-							new sap.ui.model.Filter("deleted", sap.ui.model.FilterOperator.NE, true)
-						];
-						var oListBinding = oView.getModel().bindList(
-							"/CustomerMessagesAttachments",                              //sPath
-							null,                                       //oContext
-							null,                                       //vSorters - Dynamic Sorters 
-							aFilters
-						);
-						oListBinding.requestContexts().then((oListContext) => {
-							oData = oListContext.map(rowContext => rowContext.getObject());	
-							//Handle success
-							console.log(oData);
-							Utils.getModel(oController, "vista", "view").setProperty("/attachments",oData);
-						})
-						.catch((err) => {
-							//Handle error
-						});
+						Utils.updateAttachments(oController, oData.ID);
 					}).catch((err) => {
 						//Handle error
 					});
