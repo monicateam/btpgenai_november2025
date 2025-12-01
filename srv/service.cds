@@ -91,7 +91,7 @@ service monicaSanchez_1_H04Srv
        (
             customerMessageID: String,
             fileName: String,
-            content : LargeBinary,
+            content : LargeString,
             mimeType : String
        );
     action deleteAttachmentCustomerMessage(

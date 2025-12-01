@@ -24,7 +24,7 @@ sap.ui.define([
             oFileUploader.addHeaderParameter(
                 new sap.ui.unified.FileUploaderParameter({
                     name: "slug",
-                    value: oEvt.getSource().getValue(),
+                    value: oEvt.getParameter('files') && oEvt.getParameter('files')[0],
                 })
             );
             oFileUploader.addHeaderParameter(
@@ -39,6 +39,7 @@ sap.ui.define([
 				var reader = new FileReader();
                 console.log("subiendo");
 				reader.onload = function (e) {
+                    console.log(e.target.result);
                   //  var string = this.resultString != null ? this.resultString : this.result;
 
                    // const array = Uint16Array.from(new Uint8Array(buffer));
@@ -46,7 +47,7 @@ sap.ui.define([
 
                  //   var contentBase64 = btoa(String.fromCharCode.apply(null, new Uint8Array(string)));
 				//	var data = string;
-                //    var blob = new Blob([data], {type: oEvt.getParameter('files')[0].type});
+                  //  var blob = new Blob([e.target.result], {type: oEvt.getParameter('files')[0].type});
                 //    var objectUrl = URL.createObjectURL(blob);
                 //    window.open(objectUrl);
 					let sActionName = "monicaSanchez_1_H04Srv.EntityContainer/uploadAttachmentCustomerMessage"; // Fully qualified action name
@@ -74,7 +75,8 @@ sap.ui.define([
 				reader.onerror = function (ex) {
                     Utils.getModel(oController, "vista", "view").setProperty("/busyUploadFile", false);
 				};
-				reader.readAsDataURL(oEvt.getParameter('files') && oEvt.getParameter('files')[0]);
+			    reader.readAsDataURL(oEvt.getParameter('files') && oEvt.getParameter('files')[0]);
+                //reader.readAsBinaryString(oEvt.getParameter('files') && oEvt.getParameter('files')[0]);
 			}
         },
         onUploadCompleteTickets: function (oEvt) {
@@ -96,8 +98,10 @@ sap.ui.define([
             var UUID = oEvt.getSource().data("uploadID");
             var oEditFlow = this.getEditFlow();
 			var oView = oController.getView();
-           
-            var oContextBinding = oView.getModel().bindContext("/CustomerMessagesAttachments("+UUID+")/content");
+            var sServiceURL = oModel.sServiceUrl; 
+            var sSource = sServiceURL + "/CustomerMessagesAttachments("+UUID+")/content";
+			window.open(sSource);
+            /*var oContextBinding = oView.getModel().bindContext("/CustomerMessagesAttachments("+UUID+")/$value");
             oContextBinding.requestObject().then((oData) => {
                 console.log(oData);
                 let response = oContextBinding.getBoundContext().getObject();
@@ -108,7 +112,7 @@ sap.ui.define([
                 link.click();
             }).catch((err) => {
                 //Handle error
-            });
+            });*/
 /*
             console.log("OK");
            let sActionName = "monicaSanchez_1_H04Srv.EntityContainer/downloadAttachmentCustomerMessage"; // Fully qualified action name

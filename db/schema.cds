@@ -44,13 +44,12 @@ entity ProductFAQ {
 entity CustomerMessagesAttachments : cuid, managed {
     key ID                 : UUID @(Core.Computed: true);
         customerMessageKey : UUID;
-        content            : LargeBinary  @Core.MediaType: mimeType  @odata.draft.skip;
-        mimeType          : String  @Core.IsMediaType;
-        fileName           : String;
+        @Core.MediaType: mimeType  @odata.draft.skip
+        content            : LargeBinary;
+        @Core.IsMediaType: true
+        mimeType          : String;
+        fileName           : String @Core.ContentDisposition.Type: 'inline';
         deleted            : Boolean;
 }
 
-annotate CustomerMessagesAttachments with @UI.MediaResource: {Stream: content} {
-    content  @Core.MediaType: mimeType  @odata.draft.skip;
-    mimeType @Core.IsMediaType;
-  }
+
