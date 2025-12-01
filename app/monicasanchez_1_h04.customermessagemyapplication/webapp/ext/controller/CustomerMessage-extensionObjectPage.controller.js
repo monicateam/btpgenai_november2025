@@ -1,4 +1,8 @@
-sap.ui.define(['sap/ui/core/mvc/ControllerExtension'], function (ControllerExtension) {
+sap.ui.define([
+	'sap/ui/core/mvc/ControllerExtension',
+	'monicasanchez1h04/customermessagemyapplication/utils/Tools',
+	"sap/ui/model/json/JSONModel"
+], function (ControllerExtension, Utils,JSONModel) {
 	'use strict';
 
 	return ControllerExtension.extend('monicasanchez1h04.customermessagemyapplication.ext.controller.CustomerMessage-extensionObjectPage', {
@@ -13,11 +17,7 @@ sap.ui.define(['sap/ui/core/mvc/ControllerExtension'], function (ControllerExten
 				// you can access the Fiori elements extensionAPI via this.base.getExtensionAPI
 				var oModel = this.base.getExtensionAPI().getModel();
 			},
-			routing: {
-				onAfterBinding: async function (oBindingContext) {
-
-				} 
-    		}
+			
 		}
 	});
 });

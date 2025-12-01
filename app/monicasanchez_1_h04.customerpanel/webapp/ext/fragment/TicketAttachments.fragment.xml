@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:macros="sap.fe.macros" xmlns:u="sap.ui.unified" >
 	<VBox core:require="{ handler: 'monicasanchez1h04/customerpanel/ext/fragment/TicketAttachments'}">
-		<Table items="{vista>/attachments}" alternateRowColors="true" id="tableAttachments" mode="MultiSelect" busy="{vista>/busyTableAttachments}"
+		<Table items="{vista>/attachments}" alternateRowColors="true" id="tableAttachments" mode="None" busy="{vista>/busyTableAttachments}"
 			sticky="HeaderToolbar,ColumnHeaders">
 			<headerToolbar>
 				<OverflowToolbar width="100%">

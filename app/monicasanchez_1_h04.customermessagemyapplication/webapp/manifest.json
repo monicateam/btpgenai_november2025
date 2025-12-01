@@ -141,7 +141,6 @@
             "settings": {
               "editableHeaderContent": false,
               "contextPath": "/CustomerMessage",
-              
               "content": {
                 "header": {
                   "actions": {
@@ -156,9 +155,20 @@
                       "text": "{i18n>generateReply}"
                     }
                   }
+                },
+                "body": {
+                  "sections": {
+                    "TicketAttachments": {
+                      "template": "monicasanchez1h04.customermessagemyapplication.ext.fragment.TicketAttachments",
+                      "position": {
+                        "placement": "After",
+                        "anchor": "GeneratedFacet1"
+                      },
+                      "title": "Attachments"
+                    }
+                  }
                 }
               }
-              
             }
           }
         }
@@ -176,6 +186,9 @@
         "sap.ui.controllerExtensions": {
           "sap.fe.templates.ObjectPage.ObjectPageController": {
             "controllerName": "monicasanchez1h04.customermessagemyapplication.ext.controller.CustomerMessage-extensionObjectPage"
+          },
+          "sap.fe.templates.ObjectPage.ObjectPageController#monicasanchez1h04.customermessagemyapplication::CustomerMessageObjectPage": {
+            "controllerName": "monicasanchez1h04.customermessagemyapplication.ext.controller.TicketAttachmentsExtension"
           }
         }
       }

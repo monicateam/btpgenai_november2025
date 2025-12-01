@@ -1,0 +1,33 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:macros="sap.fe.macros" xmlns:u="sap.ui.unified" >
+	<VBox core:require="{ handler: 'monicasanchez1h04/customermessagemyapplication/ext/fragment/TicketAttachments'}">
+		<Table items="{vista>/attachments}" alternateRowColors="true" id="tableAttachments" mode="None" busy="{vista>/busyTableAttachments}"
+			sticky="HeaderToolbar,ColumnHeaders">
+			<columns>
+				<Column>
+					<Text text="{i18n>filename}"/>
+				</Column>
+				<Column width="9em">
+					<Text text="{i18n>mediaType}"/>
+				</Column>
+				<Column vAlign="Middle" hAlign="Center" width="12em">
+					<Text text=""/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<cells>
+						<Text text="{vista>fileName}"/>
+						<Text text="{vista>mimeType}"/>
+						<HBox>
+							<core:Icon src="sap-icon://download-from-cloud" press="handler.onPressDownload">
+								<core:customData>
+									<core:CustomData key="uploadID" value="{vista>ID}"/>
+								</core:customData>
+							</core:Icon>
+						</HBox>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+	</VBox>
+</core:FragmentDefinition>

@@ -375,6 +375,27 @@ sap.ui.define([
                 oDialog.addStyleClass("sapUiResponsiveContentPadding");
                 oDialog.open();
             },
+            updateAttachments: function(oController, customerMessageKey) {
+                var oView = oController.getView();
+                var aFilters = [
+                    new sap.ui.model.Filter("customerMessageKey", sap.ui.model.FilterOperator.EQ, customerMessageKey),
+                    new sap.ui.model.Filter("deleted", sap.ui.model.FilterOperator.NE, true)
+                ];
+                var oListBinding = oView.getModel().bindList(
+                    "/CustomerMessagesAttachments",                              //sPath
+                    null,                                       //oContext
+                    null,                                       //vSorters - Dynamic Sorters 
+                    aFilters
+                );
+                oListBinding.requestContexts().then((oListContext) => {
+                    var oData = oListContext.map(rowContext => rowContext.getObject());	
+                    //Handle success
+                    this.getModel(oController, "vista", "view").setProperty("/attachments",oData);
+                })
+                .catch((err) => {
+                    //Handle error
+                });
+            }
 
         };
     });

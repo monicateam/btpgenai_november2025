@@ -90,6 +90,19 @@ annotate service.CustomerMessage with @(
             Value : customerMessageID,
         }
     ],
+    UI.Facets : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'Main',
+            Label : 'General Information',
+            Target : '@UI.FieldGroup#Main',
+        },
+    ],
+    UI.FieldGroup #Attachments : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+        ],
+    },
 );
 
 annotate service.CustomerMessage with {
