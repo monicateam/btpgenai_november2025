@@ -14,7 +14,6 @@ const LLM_CONFIG = {
 
 // System message to set the context for the LLM.
 const SYSTEM_MESSAGE = { role: 'system', content: 'You are a support agent for our freezers products' };
-
 // Function to create an orchestration client using the specified prompt.
 async function createOrchestrationClient(prompt) {
     const { OrchestrationClient, buildAzureContentSafetyFilter } = await import('@sap-ai-sdk/orchestration');
@@ -25,6 +24,42 @@ async function createOrchestrationClient(prompt) {
                 template: [
                     SYSTEM_MESSAGE,
                     { role: 'user', content: prompt }
+                ]
+            }
+        },
+        filtering: {
+            input: {
+                filters: [buildAzureContentSafetyFilter('input', { self_harm: 0 })]
+            }
+        }
+    });
+}
+
+
+
+async function createOrchestrationToAnalyzeFile(prompt) {
+    const { OrchestrationClient, buildAzureContentSafetyFilter } = await import('@sap-ai-sdk/orchestration');
+    return new OrchestrationClient({
+        promptTemplating: {
+            model: LLM_CONFIG,
+            prompt: {
+                template: [
+                    SYSTEM_MESSAGE,
+                    {
+                        role: 'user',
+                        content: [
+                            {
+                                type: 'text',
+                                text: `${prompt}`,
+                            },
+                            {
+                                type: 'image_url',
+                                image_url: {
+                                    url: '{{?fileAnalyze}}'
+                                }
+                            }
+                        ]
+                    }
                 ]
             }
         },
@@ -138,8 +173,40 @@ async function generateResponseOtherMessage(messageSentiment, fullMessageCustome
     }
 }
 
+async function getDescriptionAboutFile(base64File,mimeType, userLanguage) {
+    const prompt = `
+    Generate a description in English from the submitted file submitted by the user and put it in fileDescriptionEnglish.
+    Translate fileDescriptionEnglish to {{?userLanguage}} language and put it in fileDescriptionUserLanguage.
+    Return a true if the descriptions from before a Fridge is found, otherwise return false in fileAboutIsAboutFridge.
+    Return the result in a JSON like the following template:
+    {
+        fileDescriptionEnglish: text,
+        fileDescriptionUserLanguage: text,
+        fileAboutIsAboutFridge: Boolean
+    }
+    `;
+    try {
+        // Create orchestration client using the generated prompt
+        const orchestrationClient = await createOrchestrationToAnalyzeFile(prompt);
+        // Get the response by providing the required input parameters
+        const response = await orchestrationClient.chatCompletion({
+            placeholderValues: { 
+                fileAnalyze: base64File,
+                userLanguage
+            }
+        });
+        // Parse and return the generated response in JSON format
+        return JSON.parse(response.getContent());
+    } catch (error) {
+        // Log an error message and re-throw an error if response generation fails
+        LOG.error('Error generating other message response:', error);
+        throw new Error('Response generation service failed.');
+    }
+}
+
 module.exports = {
     preprocessCustomerMessage, 
     generateResponseTechMessage, 
     generateResponseOtherMessage,
+    getDescriptionAboutFile
 };

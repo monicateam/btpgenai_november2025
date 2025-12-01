@@ -47,7 +47,8 @@ sap.ui.define([
                             { name: 'customerMessageID', value: Utils.getModel(oController, "vista", "view").getProperty("/ticketData/ID") },
                             { name: 'fileName', value: oEvt.getParameter('files')[0].name },
                             { name: 'content', value: e.target.result },
-                            { name: 'mimeType', value: oEvt.getParameter('files')[0].type }
+                            { name: 'mimeType', value: oEvt.getParameter('files')[0].type },
+                            { name: 'userLanguage', value: Utils.getModel(oController, "vista", "view").getProperty("/ticketData/sourceLanguage")  }
                         ],
                         skipParameterDialog: true
                     };

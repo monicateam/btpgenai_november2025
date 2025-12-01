@@ -92,7 +92,8 @@ service monicaSanchez_1_H04Srv
             customerMessageID: String,
             fileName: String,
             content : LargeString,
-            mimeType : String
+            mimeType : String,
+            userLanguage: String
        );
     action deleteAttachmentCustomerMessage(
         ID: UUID,

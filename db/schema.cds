@@ -27,7 +27,7 @@ entity CustomerMessage : cuid {
     suggestedResponseEnglish          : String(1500);
     suggestedResponseCustomerLanguage : String(1500);
     S4HCP_ServiceOrder                : Association to one S4HCP_ServiceOrder_Odata.A_ServiceOrder;
-    deleted                           : Boolean;
+    deleted                           : Boolean default false;
 }
 
 annotate CustomerMessage with @assert.unique: {customerMessageID: [customerMessageID], };
@@ -42,14 +42,17 @@ entity ProductFAQ {
 
 
 entity CustomerMessagesAttachments : cuid, managed {
-    key ID                 : UUID @(Core.Computed: true);
-        customerMessageKey : UUID;
+    key ID                      : UUID   @(Core.Computed              : true);
+        customerMessageKey      : UUID;
+
         @Core.MediaType: mimeType  @odata.draft.skip
-        content            : LargeBinary;
+        content                 : LargeBinary;
+
         @Core.IsMediaType: true
-        mimeType          : String;
-        fileName           : String @Core.ContentDisposition.Type: 'inline';
-        deleted            : Boolean;
+        mimeType                : String;
+        fileName                : String @Core.ContentDisposition.Type: 'inline';
+        descriptionEnglish      : String(1000);
+        descriptionUserLanguage : String(1000);
+        imageContextTicket      : Boolean default false;
+        deleted                 : Boolean default false;
 }
-
-

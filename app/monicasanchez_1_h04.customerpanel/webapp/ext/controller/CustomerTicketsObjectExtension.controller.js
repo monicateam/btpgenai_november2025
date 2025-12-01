@@ -36,7 +36,7 @@ sap.ui.define([
 					} else {
 						Utils.getModel(oController, "vista", "view").setData(modelViewEtension);
 					}
-
+					console.log(oBindingContext.getProperty("/sourceLanguage"));
 					
 					var oContextBinding = oView.getModel().bindContext(oBindingContext.sPath);
 					oContextBinding.requestObject().then((oData) => {
