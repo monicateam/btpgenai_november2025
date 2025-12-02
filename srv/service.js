@@ -13,9 +13,9 @@ const customertickets_downloadUploadedFiles = require('./code/customertickets-do
 class monicaSanchez_1_H04Srv extends LCAPApplicationService {
     async init() {
 
-        this.before('READ', 'CustomerMessage', async (request) => {
-            await customermessage_Logic_PreprocessMessages(request);
-        });
+        //this.before('READ', 'CustomerMessage', async (request) => {
+       //     await customermessage_Logic_PreprocessMessages(request);
+       // });
 
         this.after(['CREATE', 'UPDATE'], 'ProductFAQ', async (results, request) => {
             await productfaq_Logic_EmbedFAQ(results, request);

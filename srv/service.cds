@@ -98,7 +98,7 @@ service monicaSanchez_1_H04Srv
     action deleteAttachmentCustomerMessage(
         ID: UUID,
         customerMessageID: String
-    )
+    );
 
     entity Severity as projection on my.Severity;
 
