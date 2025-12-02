@@ -1,6 +1,7 @@
 const cds = require('@sap/cds');
 const LOG = cds.log('GenAI');
-const { getDescriptionAboutFile } = require('./genai/orchestration');
+const { getDescriptionAboutFile,getDescriptionAboutSound } = require('./genai/orchestration');
+const { isAudioType,isImage } = require('./utils');
 const {
 	Readable,
 	PassThrough
@@ -17,7 +18,15 @@ module.exports = async function (request) {
 	}
 
 	try {
-		var fileDescriptionJSON = await getDescriptionAboutFile(request.data.content, request.data.mimeType, request.data.userLanguage);
+		var fileDescriptionJSON = {};
+		if(await isImage(request.data.mimeType)) {
+			fileDescriptionJSON = await getDescriptionAboutFile(request.data.content, request.data.mimeType, request.data.userLanguage);
+		} 
+		else {
+			if(await isAudioType(request.data.mimeType)) {
+				//fileDescriptionJSON = await getDescriptionAboutSound(request.data.content, request.data.userLanguage);
+			}
+		}
 
 	} catch(error) {
 		LOG.error('Error in orchestration before uploading file: ', error.message);
