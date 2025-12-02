@@ -6,6 +6,9 @@
 				<Column>
 					<Text text="{i18n>filename}"/>
 				</Column>
+				<Column>
+					<Text text="{i18n>fileDescription}"/>
+				</Column>
 				<Column width="9em">
 					<Text text="{i18n>mediaType}"/>
 				</Column>
@@ -17,6 +20,7 @@
 				<ColumnListItem>
 					<cells>
 						<Text text="{vista>fileName}"/>
+						<Text text="{vista>descriptionEnglish}"/>
 						<Text text="{vista>mimeType}"/>
 						<HBox>
 							<core:Icon src="sap-icon://download-from-cloud" press="handler.onPressDownload">

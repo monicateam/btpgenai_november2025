@@ -99,6 +99,10 @@ service monicaSanchez_1_H04Srv
         ID: UUID,
         customerMessageID: String
     )
+
+    entity Severity as projection on my.Severity;
+
+    entity Category as projection on my.Category;
 }
 
 annotate monicaSanchez_1_H04Srv with @requires :

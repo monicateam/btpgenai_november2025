@@ -40,6 +40,16 @@ entity ProductFAQ {
         embedding : Vector(1536);
 }
 
+entity Severity {
+    key ID: Integer;
+    severity: String(20);
+}
+
+entity Category {
+    key ID: Integer;
+    category: String(50);
+}
+
 
 entity CustomerMessagesAttachments : cuid, managed {
     key ID                      : UUID   @(Core.Computed              : true);

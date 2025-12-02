@@ -19,7 +19,7 @@ sap.ui.define([
             var oFileUploader = oEvt.getSource();
             var filename = oEvt.getParameter("newValue");
             var currentKeyID = Utils.getModel(oController, "vista", "view").getProperty("/ticketData/ID");
-            Utils.getModel(oController, "vista", "view").setProperty("/busyUploadFile", true);
+            
             oFileUploader.removeAllHeaderParameters();
             oFileUploader.addHeaderParameter(
                 new sap.ui.unified.FileUploaderParameter({
@@ -38,6 +38,7 @@ sap.ui.define([
             if (file && window.FileReader) {
 				var reader = new FileReader();
 				reader.onload = function (e) {
+                    Utils.getModel(oController, "vista", "view").setProperty("/busyUploadFile", true);
 					let sActionName = "monicaSanchez_1_H04Srv.EntityContainer/uploadAttachmentCustomerMessage"; // Fully qualified action name
                     let mParameters = {
                         entitySetName: "CustomerMessagesAttachments",

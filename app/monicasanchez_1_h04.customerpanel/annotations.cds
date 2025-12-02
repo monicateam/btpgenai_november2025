@@ -23,7 +23,7 @@ annotate service.customerTickets with @(
             },
             {
                 $Type : 'UI.DataField',
-                Label : '{i18n>Product}',
+                Label : '{i18n>ProductName}',
                 Value : productName,
             },
             {
@@ -81,34 +81,6 @@ annotate service.customerTickets with @(
                 Value : sourceLanguage,
                 @UI.Hidden,
             },
-            {
-                $Type : 'UI.DataField',
-                Label : '{i18n>FullDetail}',
-                Value : fullMessageCustomerLanguage,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'fullMessageEnglish',
-                Value : fullMessageEnglish,
-                @UI.Hidden,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'suggestedResponseEnglish',
-                Value : suggestedResponseEnglish,
-                @UI.Hidden,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : '{i18n>Response}',
-                Value : suggestedResponseCustomerLanguage,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'S4HCP_ServiceOrder_ServiceOrder',
-                Value : S4HCP_ServiceOrder_ServiceOrder,
-                @UI.Hidden,
-            },
         ],
     },
     UI.Facets : [
@@ -117,6 +89,18 @@ annotate service.customerTickets with @(
             ID : 'GeneratedFacet1',
             Label : '{i18n>TicketDetail}',
             Target : '@UI.FieldGroup#GeneratedGroup',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            Label : '{i18n>Detail}',
+            ID : 'i18nDetail',
+            Target : '@UI.FieldGroup#i18nDetail',
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            Label : '{i18n>Response}',
+            ID : 'Response',
+            Target : '@UI.FieldGroup#Response',
         },
     ],
     UI.LineItem : [
@@ -127,28 +111,28 @@ annotate service.customerTickets with @(
         },
         {
             $Type : 'UI.DataField',
-            Label : 'productName',
+            Label : '{i18n>Productname}',
             Value : productName,
         },
         {
             $Type : 'UI.DataField',
             Value : fullMessageCustomerLanguage,
-            Label : 'fullMessageCustomerLanguage',
+            Label : '{i18n>Fullmessagecustomerlanguage}',
         },
         {
             $Type : 'UI.DataField',
             Value : messageUrgency,
-            Label : 'messageUrgency',
+            Label : '{i18n>Messageurgency}',
         },
         {
             $Type : 'UI.DataField',
             Value : suggestedResponseCustomerLanguage,
-            Label : 'suggestedResponseCustomerLanguage',
+            Label : '{i18n>Suggestedresponsecustomerlanguage}',
         },
         {
             $Type : 'UI.DataField',
             Value : titleCustomerLanguage,
-            Label : 'titleCustomerLanguage',
+            Label : '{i18n>Titlecustomerlanguage}',
         },
         {
             $Type : 'UI.DataField',
@@ -165,6 +149,44 @@ annotate service.customerTickets with @(
         TypeNamePlural : '{i18n>SupportTickets}',
     },
     UI.DeleteHidden : true,
+    UI.FieldGroup #i18nDetail : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type : 'UI.DataField',
+                Label : '{i18n>FullDetail}',
+                Value : fullMessageCustomerLanguage,
+            },
+            {
+                $Type : 'UI.DataField',
+                Label : 'fullMessageEnglish',
+                Value : fullMessageEnglish,
+                @UI.Hidden,
+            },
+        ],
+    },
+    UI.FieldGroup #Response : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type : 'UI.DataField',
+                Label : '{i18n>Response}',
+                Value : suggestedResponseCustomerLanguage,
+            },
+            {
+                $Type : 'UI.DataField',
+                Label : 'suggestedResponseEnglish',
+                Value : suggestedResponseEnglish,
+                @UI.Hidden,
+            },
+            {
+                $Type : 'UI.DataField',
+                Label : 'S4HCP_ServiceOrder_ServiceOrder',
+                Value : S4HCP_ServiceOrder_ServiceOrder,
+                @UI.Hidden,
+            },
+        ],
+    },
 );
 
 annotate service.customerTickets with {
@@ -202,10 +224,86 @@ annotate service.customerTickets with {
 };
 
 annotate service.customerTickets with {
-    fullMessageCustomerLanguage @UI.MultiLineText : true
+    fullMessageCustomerLanguage @(
+        UI.MultiLineText : true,
+        Common.FieldControl : #Mandatory,
+    )
 };
 
 annotate service.customerTickets with {
-    summaryCustomerLanguage @UI.MultiLineText : true
+    summaryCustomerLanguage @(
+        UI.MultiLineText : true,
+        Common.FieldControl : #Mandatory,
+    )
+};
+
+annotate service.customerTickets with {
+    messageUrgency @(
+        Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'Severity',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : messageUrgency,
+                    ValueListProperty : 'severity',
+                },
+                {
+                    $Type : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'ID',
+                },
+            ],
+            Label : 'Urgency',
+            PresentationVariantQualifier : 'vh_customerTickets_messageUrgency',
+        },
+        Common.ValueListWithFixedValues : true,
+        Common.FieldControl : #Mandatory,
+)};
+
+annotate service.Severity with @(
+    UI.PresentationVariant #vh_customerTickets_messageUrgency : {
+        $Type : 'UI.PresentationVariantType',
+        SortOrder : [
+            {
+                $Type : 'Common.SortOrderType',
+                Property : ID,
+                Descending : false,
+            },
+        ],
+    }
+);
+
+annotate service.customerTickets with {
+    messageCategory @(
+        Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'Category',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : messageCategory,
+                    ValueListProperty : 'category',
+                },
+                {
+                    $Type : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'ID',
+                },
+            ],
+            Label : 'Category',
+        },
+        Common.ValueListWithFixedValues : true,
+        Common.FieldControl : #Mandatory,
+)};
+
+annotate service.customerTickets with {
+    productName @Common.FieldControl : #Mandatory
+};
+
+annotate service.customerTickets with {
+    titleCustomerLanguage @Common.FieldControl : #Mandatory
+};
+
+annotate service.customerTickets with {
+    productId @Common.FieldControl : #Mandatory
 };
 

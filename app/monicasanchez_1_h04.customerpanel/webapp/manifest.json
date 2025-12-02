@@ -149,7 +149,7 @@
                       "template": "monicasanchez1h04.customerpanel.ext.fragment.TicketAttachments",
                       "position": {
                         "placement": "After",
-                        "anchor": "GeneratedFacet1"
+                        "anchor": "Response"
                       },
                       "title": "Attachments"
                     }
