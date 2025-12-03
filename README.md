@@ -23,3 +23,6 @@ File or Folder | Purpose
 ## Learn More
 
 Learn more at https://cap.cloud.sap/docs/get-started/.
+
+## Activity
+This code was developed with the Course for SAP BTP Bootcamp (BTPgenAI4S4HC) for Partners
