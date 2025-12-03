@@ -45,7 +45,24 @@
       },
       "auth": {
         "[development]": {
-          "kind": "dummy"
+          "kind": "basic",
+          "users": {
+            "admin": {
+              "password": "admin",
+              "roles": [ "authenticated-user", "admin" ],
+              "attr": {
+                "customer_id": "*"
+              }
+              
+            },
+            "monicateam": {
+              "password": "monicateam",
+              "roles": [ "authenticated-user" ],
+              "attr": {
+                "customer_id": "C004"
+              }
+            }
+          }
         },
         "[production]": {
           "kind": "xsuaa"

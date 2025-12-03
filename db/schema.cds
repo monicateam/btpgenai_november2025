@@ -66,3 +66,10 @@ entity CustomerMessagesAttachments : cuid, managed {
         imageContextTicket      : Boolean default false;
         deleted                 : Boolean default false;
 }
+
+
+entity PromptsGenerateReply: cuid, managed {
+    key ID                      : UUID   @(Core.Computed              : true);
+    user: String;
+    Prompt: LargeString;
+}

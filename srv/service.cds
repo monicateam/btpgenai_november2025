@@ -103,6 +103,9 @@ service monicaSanchez_1_H04Srv
     entity Severity as projection on my.Severity;
 
     entity Category as projection on my.Category;
+
+    entity PromptsGenerateReply as Projection on my.PromptsGenerateReply;
+
 }
 
 annotate monicaSanchez_1_H04Srv with @requires :

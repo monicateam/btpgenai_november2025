@@ -2,16 +2,23 @@ const cds = require('@sap/cds');
 const LOG = cds.log('GenAI');
 const { preprocessCustomerMessage } = require('./genai/orchestration');
 
+
 /**
  * message categorization, urgency classification, service categorization and summarization and translation
  * @Before(event = { "READ" }, entity = "monicaSanchez_1_H04Srv.CustomerMessage")
  * @param {cds.Request} request - User information, tenant-specific CDS model, headers and query parameters
 */
 module.exports = async function(request) {
+    const UserLoggedIn = cds.context.user;
 	let customerMessages;
 try {
     // Fetch all customer messages for processing
-    customerMessages = await SELECT.from('MonicaSanchez_1_H04.CustomerMessage').forUpdate();
+    if(UserLoggedIn.attr.customer_id !== "*") {
+        customerMessages = await SELECT.from('MonicaSanchez_1_H04.CustomerMessage').where({ customerId: UserLoggedIn.attr.customer_id }).forUpdate();
+    } else {
+        customerMessages = await SELECT.from('MonicaSanchez_1_H04.CustomerMessage').forUpdate();
+    }
+    
 } catch (error) {
     LOG.error('Failed to retrive customer messages', error.message);
     return request.reject(500, 'Failed to retrive customer messages');
