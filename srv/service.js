@@ -9,8 +9,8 @@ const customermessage_Logic_GenerateReply = require('./code/customermessage-logi
 const customermessage_Logic_MaintainSO = require('./code/customermessage-logic-maintainSO');
 const customertickets_uploadFiles = require('./code/customertickets-uploadFiles');
 const customertickets_deleteUploadedFiles = require('./code/customertickets-deleteFiles');
-const customertickets_downloadUploadedFiles = require('./code/customertickets-downloadFiles');
-
+const customerattachments_onread = require('./code/customerattachments-onRead');
+const customertickets_beforeCreate = require('./code/customertickets-beforeCreate');
 class monicaSanchez_1_H04Srv extends LCAPApplicationService {
     async init() {
 
@@ -42,18 +42,12 @@ class monicaSanchez_1_H04Srv extends LCAPApplicationService {
             await customertickets_deleteUploadedFiles(request);
         });
         this.on('READ', 'CustomerMessagesAttachments', async (request, next) => {
-            if (!request.data.ID) {
-                return next()
-            }
-            const url = request._.req.path
-            if (url.includes('content')) {
-                return customertickets_downloadUploadedFiles(request);
-            }
-            else return next()
+            return customerattachments_onread(request, next);
         });
 
         this.before('CREATE', 'customerTickets', async request => {
-            const customerTicketID = request.data.ID;
+            await customertickets_beforeCreate(request);
+           /* const customerTicketID = request.data.ID;
             if (!customerTicketID) {
                 return request.reject(400, 'CustomerTicket ID is missing.');
             }
@@ -74,7 +68,7 @@ class monicaSanchez_1_H04Srv extends LCAPApplicationService {
                 // await UPDATE('customerTickets').set('customerMessageID', request.data.customerMessageID);
             } catch (error) {
                 return request.reject(500, error);
-            }
+            }*/
         });
 
 
