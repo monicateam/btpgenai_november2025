@@ -1,0 +1,12 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:l="sap.ui.layout" >
+    <HBox alignItems="Center" width="100%" core:require="{handler: 'monicasanchez1h04/customerpanel/ext/controller/customerId'}">
+         <Input id="customerID"
+             core:require="{
+                 Value: 'sap/fe/macros/filter/type/Value'
+             }"
+             editable="false" enabled="false"
+             change="handler.onValueChanged"
+             value="{path: 'filterValues>', type: 'Value'}"
+         />
+    </HBox>
+</core:FragmentDefinition>

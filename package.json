@@ -51,7 +51,10 @@
               "password": "admin",
               "roles": [ "authenticated-user", "admin" ],
               "attr": {
-                "customer_id": "*"
+                "customer_id": "*",
+                "origin_country": "Spain",
+                "source_language": "Spanish",
+                "customer_name": "Admin demo"
               }
               
             },
@@ -59,7 +62,10 @@
               "password": "monicateam",
               "roles": [ "authenticated-user" ],
               "attr": {
-                "customer_id": "C004"
+                "customer_id": "C004",
+                "origin_country": "Spain",
+                "source_language": "Spanish",
+                "customer_name": "Prueba Demo"
               }
             }
           }

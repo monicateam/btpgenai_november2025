@@ -124,6 +124,17 @@
                 }
               },
               "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.SelectionFields": {
+                  "filterFields": {
+                    "customerId": {
+                      "label": "{i18n>customerID}",
+                      "property": "customerId",
+                      "availability": "Default",
+                      "template": "monicasanchez1h04.customerpanel.ext.fragment.customerID",
+                      "required": false
+                    }
+                  }
+                },
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
                     "type": "ResponsiveTable"

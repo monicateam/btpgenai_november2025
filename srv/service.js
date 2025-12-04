@@ -11,13 +11,9 @@ const customertickets_uploadFiles = require('./code/customertickets-uploadFiles'
 const customertickets_deleteUploadedFiles = require('./code/customertickets-deleteFiles');
 const customerattachments_onread = require('./code/customerattachments-onRead');
 const customertickets_beforeCreate = require('./code/customertickets-beforeCreate');
+const userinfo = require('./code/userinfo');
 class monicaSanchez_1_H04Srv extends LCAPApplicationService {
     async init() {
-
-        //this.before('READ', 'CustomerMessage', async (request) => {
-        //     await customermessage_Logic_PreprocessMessages(request);
-        // });
-
         this.after(['CREATE', 'UPDATE'], 'ProductFAQ', async (results, request) => {
             await productfaq_Logic_EmbedFAQ(results, request);
         });
@@ -47,28 +43,10 @@ class monicaSanchez_1_H04Srv extends LCAPApplicationService {
 
         this.before('CREATE', 'customerTickets', async request => {
             await customertickets_beforeCreate(request);
-           /* const customerTicketID = request.data.ID;
-            if (!customerTicketID) {
-                return request.reject(400, 'CustomerTicket ID is missing.');
-            }
+        });
 
-            let customerTicketEntry;
-            try {
-                // Fetch the specific CustomerMessage entry for update
-                customerTicketEntry = await SELECT.one('MonicaSanchez_1_H04.CustomerMessage').orderBy({ ref: ['customerMessageID'], sort: 'desc' });
-                if (!customerTicketEntry) {
-                    return request.reject(404, `CustomerMessage with ID ${customerTicketEntry} not found.`);
-                }
-
-                request.data.customerId = "C004";
-                request.data.originatingCountry = "Spain";
-                request.data.sourceLanguage = "Spanish";
-                request.data.customerName = "Prueba";
-                request.data.customerMessageID = customerTicketEntry.customerMessageID + 1;
-                // await UPDATE('customerTickets').set('customerMessageID', request.data.customerMessageID);
-            } catch (error) {
-                return request.reject(500, error);
-            }*/
+        this.on('userInfo', async(request) => {
+            return userinfo(request);
         });
 
 
