@@ -44,8 +44,7 @@ sap.ui.define([
 			var oController = this.base.getView().getController();
 			var oModel = this.base.getExtensionAPI().getModel();
 			var currentCustomerId = Utils.getModel(oController, "vista", "view").getProperty("/customer_id");
-			//var currentCustomerId = that.getView().byId("monicasanchez1h04.customerpanel::customerTicketsList--fe::FilterBar::customerTickets::CustomFilterField::customerId--customerID").getValue();
-
+			
 			if(currentCustomerId === undefined || currentCustomerId.length === 0) {
 				let sActionName = "monicaSanchez_1_H04Srv.EntityContainer/userInfo"; // Fully qualified action name
 				let mParameters = {
@@ -57,42 +56,14 @@ sap.ui.define([
 				oController.editFlow.invokeAction(sActionName, mParameters)
 					.then((oData) => {
 						var responseOdata = oData?.getObject();
-						console.log(responseOdata);
-						//Add the data of the current user system (hardcoded now, option will be to be loaded called on the ERP system of the logon data or other service)
-						//var oBindingParams = oEvent.getParameters("bindingParams");
-						var statFilter = new sap.ui.model.Filter("customerId", "EQ", responseOdata.id);
 						that.getView().byId("monicasanchez1h04.customerpanel::customerTicketsList--fe::FilterBar::customerTickets::CustomFilterField::customerId--customerID").setValue(responseOdata.id);
 						Utils.getModel(oController, "vista", "view").setProperty("/customer_id",responseOdata.id);
 						that.getView().byId("monicasanchez1h04.customerpanel::customerTicketsList--fe::FilterBar::customerTickets").triggerSearch();
-						/*
-						if(oBindingParams.collectionBindingInfo.collectionBindingInfo.filters === undefined) {
-							oBindingParams.collectionBindingInfo.collectionBindingInfo.filters = [];
-						}
-
-						if(oBindingParams.collectionBindingInfo.collectionBindingInfo.filters.aFilters !== undefined) {
-							oBindingParams.collectionBindingInfo.collectionBindingInfo.filters.aFilters.push(statFilter);
-						} else {
-							oBindingParams.collectionBindingInfo.collectionBindingInfo.filters.push(statFilter);
-						}
-						oEvent.getSource().invalidate();
-						oEvent.getSource().refresh();
-						console.log(oEvent.getSource().getSelectedContexts());*/
 					}).catch((error) => {
 					
 					});
 			} else {
 				that.getView().byId("monicasanchez1h04.customerpanel::customerTicketsList--fe::FilterBar::customerTickets::CustomFilterField::customerId--customerID").setValue(Utils.getModel(oController, "vista", "view").getProperty("/customer_id"));
-			/*	var oBindingParams = oEvent.getParameters("bindingParams");
-				var statFilter = new sap.ui.model.Filter("customerId", "EQ", Utils.getModel(oController, "vista", "view").getProperty("/customer_id"));
-				if(oBindingParams.collectionBindingInfo.collectionBindingInfo.filters === undefined) {
-					oBindingParams.collectionBindingInfo.collectionBindingInfo.filters = [];
-				}
-
-				if(oBindingParams.collectionBindingInfo.collectionBindingInfo.filters.aFilters !== undefined) {
-					oBindingParams.collectionBindingInfo.collectionBindingInfo.filters.aFilters.push(statFilter);
-				} else {
-					oBindingParams.collectionBindingInfo.collectionBindingInfo.filters.push(statFilter);
-				}*/
 			}			
 		
 		}
