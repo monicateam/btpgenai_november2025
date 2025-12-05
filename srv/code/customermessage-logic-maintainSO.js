@@ -51,7 +51,7 @@ if (attachedSOId) {
         const finalNote = await s4HcpServiceOrderOdata.run(
             INSERT.into(A_ServiceOrderText, {
                 ServiceOrder: attachedSOId,
-                Language: 'EN',
+                Language: requestServiceData.ServiceOrderLanguage,
                 LongTextID: 'S003',
                 LongText: suggestedResponseEnglish
             })
@@ -77,7 +77,7 @@ if (attachedSOId) {
     };
     const persResp = { PersonResponsible:  requestServiceData.PersonResponsible };
     const initNote = {
-        Language: 'EN',
+        Language: requestServiceData.ServiceOrderLanguage,
         LongTextID: 'S001',
         LongText: fullMessageEnglish
     };
