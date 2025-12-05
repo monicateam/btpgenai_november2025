@@ -19,20 +19,6 @@ sap.ui.define([
             var oFileUploader = oEvt.getSource();
             var filename = oEvt.getParameter("newValue");
             var currentKeyID = Utils.getModel(oController, "vista", "view").getProperty("/ticketData/ID");
-            
-            oFileUploader.removeAllHeaderParameters();
-            oFileUploader.addHeaderParameter(
-                new sap.ui.unified.FileUploaderParameter({
-                    name: "slug",
-                    value: oEvt.getParameter('files') && oEvt.getParameter('files')[0],
-                })
-            );
-            oFileUploader.addHeaderParameter(
-                new sap.ui.unified.FileUploaderParameter({
-                    name: "fileName",
-                    value: oEvt.getParameter('files')[0].name
-                })
-            );
           
             var file = oEvt.getParameter('files')[0];
             if (file && window.FileReader) {
