@@ -26,3 +26,4 @@ Learn more at https://cap.cloud.sap/docs/get-started/.
 
 ## Activity
 This code was developed with the Course for SAP BTP Bootcamp (BTPgenAI4S4HC) for Partners
+05.12.2025 - Updated some things sics of the code to work with basic authentication (package.json) with user attributes for customer panel

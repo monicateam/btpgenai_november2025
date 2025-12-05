@@ -49,8 +49,6 @@ class monicaSanchez_1_H04Srv extends LCAPApplicationService {
             return userinfo(request);
         });
 
-
-
         return super.init();
     }
 }

@@ -56,14 +56,19 @@ sap.ui.define([
 				oController.editFlow.invokeAction(sActionName, mParameters)
 					.then((oData) => {
 						var responseOdata = oData?.getObject();
-						that.getView().byId("monicasanchez1h04.customerpanel::customerTicketsList--fe::FilterBar::customerTickets::CustomFilterField::customerId--customerID").setValue(responseOdata.id);
+						if(responseOdata.id !== "*") {
+							that.getView().byId("monicasanchez1h04.customerpanel::customerTicketsList--fe::FilterBar::customerTickets::CustomFilterField::customerId--customerID").setValue(responseOdata.id);
+						}
 						Utils.getModel(oController, "vista", "view").setProperty("/customer_id",responseOdata.id);
 						that.getView().byId("monicasanchez1h04.customerpanel::customerTicketsList--fe::FilterBar::customerTickets").triggerSearch();
 					}).catch((error) => {
 					
 					});
 			} else {
-				that.getView().byId("monicasanchez1h04.customerpanel::customerTicketsList--fe::FilterBar::customerTickets::CustomFilterField::customerId--customerID").setValue(Utils.getModel(oController, "vista", "view").getProperty("/customer_id"));
+				if(Utils.getModel(oController, "vista", "view").getProperty("/customer_id") !== "*") {
+					that.getView().byId("monicasanchez1h04.customerpanel::customerTicketsList--fe::FilterBar::customerTickets::CustomFilterField::customerId--customerID").setValue(Utils.getModel(oController, "vista", "view").getProperty("/customer_id"));
+				}
+				
 			}			
 		
 		}
