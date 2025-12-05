@@ -1,4 +1,8 @@
-sap.ui.define(['sap/ui/core/mvc/ControllerExtension'], function (ControllerExtension) {
+sap.ui.define([
+	'sap/ui/core/mvc/ControllerExtension',
+	'monicasanchez1h04/customerpanel/utils/Tools',
+	"sap/ui/model/json/JSONModel"
+	], function (ControllerExtension, Utils,JSONModel) {
 	'use strict';
 
 	return ControllerExtension.extend('monicasanchez1h04.customerpanel.ext.controller.ListReportExtension', {
@@ -13,6 +17,17 @@ sap.ui.define(['sap/ui/core/mvc/ControllerExtension'], function (ControllerExten
 				// you can access the Fiori elements extensionAPI via this.base.getExtensionAPI
 				var oModel = this.base.getExtensionAPI().getModel();
 				this.oSmartTable = this.getView().byId("monicasanchez1h04.customerpanel::customerTicketsList--fe::table::customerTickets::LineItem").getParent();
+
+				var oController = this.base;
+				var modelViewEtension = {
+					customer_id: ""
+
+				};
+				if (!Utils.getModel(oController, "vista", "view")) {
+					Utils.setModel(oController, new JSONModel(modelViewEtension), "vista", "view");
+				} else {
+					Utils.getModel(oController, "vista", "view").setData(modelViewEtension);
+				}
 			},
 			routing: {
 				onBeforeBinding: async function (oBindingContext) {
@@ -25,18 +40,31 @@ sap.ui.define(['sap/ui/core/mvc/ControllerExtension'], function (ControllerExten
 			
 		},
 		_onBeforeRebindTable: function (oEvent) {
-			//Add the data of the current user system (hardcoded now, option will be to be loaded called on the ERP system of the logon data or other service)
-			var oBindingParams = oEvent.getParameters("bindingParams");
-  			var statFilter = new sap.ui.model.Filter("customerId", "EQ", "C004");
-  			if(oBindingParams.collectionBindingInfo.collectionBindingInfo.filters === undefined) {
-				oBindingParams.collectionBindingInfo.collectionBindingInfo.filters = [];
-			}
+			var that = this;
+			var oController = this.base.getView().getController();
+			var oModel = this.base.getExtensionAPI().getModel();
+			var currentCustomerId = Utils.getModel(oController, "vista", "view").getProperty("/customer_id");
+			
+			if(currentCustomerId === undefined || currentCustomerId.length === 0) {
+				let sActionName = "monicaSanchez_1_H04Srv.EntityContainer/userInfo"; // Fully qualified action name
+				let mParameters = {
+					model: oController.editFlow.getView().getModel(), // get the OData V4 model
+					label: "Submit",
+					skipParameterDialog: true
+				};
 
-			if(oBindingParams.collectionBindingInfo.collectionBindingInfo.filters.aFilters !== undefined) {
-				oBindingParams.collectionBindingInfo.collectionBindingInfo.filters.aFilters.push(statFilter);
+				oController.editFlow.invokeAction(sActionName, mParameters)
+					.then((oData) => {
+						var responseOdata = oData?.getObject();
+						that.getView().byId("monicasanchez1h04.customerpanel::customerTicketsList--fe::FilterBar::customerTickets::CustomFilterField::customerId--customerID").setValue(responseOdata.id);
+						Utils.getModel(oController, "vista", "view").setProperty("/customer_id",responseOdata.id);
+						that.getView().byId("monicasanchez1h04.customerpanel::customerTicketsList--fe::FilterBar::customerTickets").triggerSearch();
+					}).catch((error) => {
+					
+					});
 			} else {
-				oBindingParams.collectionBindingInfo.collectionBindingInfo.filters.push(statFilter);
-			}
+				that.getView().byId("monicasanchez1h04.customerpanel::customerTicketsList--fe::FilterBar::customerTickets::CustomFilterField::customerId--customerID").setValue(Utils.getModel(oController, "vista", "view").getProperty("/customer_id"));
+			}			
 		
 		}
 	});

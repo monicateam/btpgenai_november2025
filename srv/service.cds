@@ -5,6 +5,7 @@ using { MonicaSanchez_1_H04 as my } from '../db/schema.cds';
 @path : '/service/monicaSanchez_1_H04'
 service monicaSanchez_1_H04Srv
 {
+    @cds.persistence.exists
     entity ServiceOrderCreation
     {
         key ServiceOrderNumber: String(10);
@@ -26,6 +27,15 @@ service monicaSanchez_1_H04Srv
         ServiceOrderSoldToParty : String(10);
     }
 
+    @cds.persistence.exists
+    entity userEntity {
+        key id: String;
+        customer_country: String;
+        customer_language: String;
+        customer_name: String;
+    }
+
+    @cds.persistence.exists
     entity downloadEntityFile
     {
         key filename: String;
@@ -100,9 +110,14 @@ service monicaSanchez_1_H04Srv
         customerMessageID: String
     );
 
+    action userInfo () returns userEntity;
+
     entity Severity as projection on my.Severity;
 
     entity Category as projection on my.Category;
+
+    entity PromptsGenerateReply as Projection on my.PromptsGenerateReply;
+
 }
 
 annotate monicaSanchez_1_H04Srv with @requires :

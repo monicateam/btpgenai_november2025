@@ -207,8 +207,6 @@ sap.ui.define([
             var oView = this._controller.getView();
             var oContextBinding = oView.getModel().bindContext(oBindingContext[0].sPath);
             oContextBinding.requestObject().then((oData) => {
-                console.log(oData);
-
                 if(oData.suggestedResponseEnglish === null || oData.suggestedResponseEnglish !== null && oData.suggestedResponseEnglish.length === 0) {
                     if (oData.S4HCP_ServiceOrder_ServiceOrder !== null && oData.S4HCP_ServiceOrder_ServiceOrder !== undefined) {
                         Utils.callGenerateReply(oEvent, oBindingContext, that, false);

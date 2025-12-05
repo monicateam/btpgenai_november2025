@@ -41,13 +41,13 @@ entity ProductFAQ {
 }
 
 entity Severity {
-    key ID: Integer;
-    severity: String(20);
+    key ID       : Integer;
+        severity : String(20);
 }
 
 entity Category {
-    key ID: Integer;
-    category: String(50);
+    key ID       : Integer;
+        category : String(50);
 }
 
 
@@ -65,4 +65,12 @@ entity CustomerMessagesAttachments : cuid, managed {
         descriptionUserLanguage : String(1000);
         imageContextTicket      : Boolean default false;
         deleted                 : Boolean default false;
+}
+
+
+entity PromptsGenerateReply : cuid, managed {
+    key ID      : UUID @(Core.Computed: true);
+        user    : String;
+        Prompt  : LargeString;
+        deleted : Boolean default false;
 }
